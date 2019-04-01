@@ -5,6 +5,8 @@ import Conunt from './Count';
 import Clock from './Clock';
 import List from './List';
 
+import axios from 'axios';
+
 import TableComponent from './Table/TableComponent';
 
 class ToDoApp extends React.Component {
@@ -12,7 +14,11 @@ class ToDoApp extends React.Component {
         super(props);
 
         this.state = {
-            isSelection: true
+            list: [],
+            headers: [],
+            number: 0,
+            isSelection: true,
+            newToDo: ''
         }
     }
 
@@ -41,28 +47,42 @@ class ToDoApp extends React.Component {
         this.props.decrement();
     }
 
+    componentDidMount() {
+        let todoUrl = `http://127.0.0.1:3001/api/todo/`;
+
+        axios.get(todoUrl).then(response => {
+            this.setState({
+                list: response.data.list,
+                number: response.data.number,
+                headers: response.data.headers
+            });
+        }).catch(error => {
+            console.log('error :', error);
+        });
+    }
+
     render() {
         return (
             <div className="row">
                 <div className="col-md-8 col-md-offset-2">
                     <div className="panel panel-default">
                         <div className="panel-body">
-                            <Conunt countNumber={this.props.toDoApp.list.length} />
-                            <Clock number={this.props.toDoApp.number} />
+                            <Conunt countNumber={this.state.list.length} />
+                            <Clock number={this.state.number} />
                             <hr />
                             <List
-                                listItems={this.props.toDoApp.list}
+                                listItems={this.state.list}
                                 listItemClick={this.onListItemClick}
                                 deleteListItem={this.deleteListItem} />
 
                             <TableComponent
-                                columns={this.props.toDoApp.headers}
-                                listData={this.props.toDoApp.list}
+                                columns={this.state.headers}
+                                listData={this.state.list}
                                 isSelection={this.state.isSelection}
                             />
 
                             <Input
-                                value={this.props.toDoApp.newToDo}
+                                value={this.state.newToDo}
                                 onChange={this.onInputChange}
                                 onSubmit={this.onInputSubmit}
                                 increment={this.increment}

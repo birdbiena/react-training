@@ -1,6 +1,4 @@
-import localData from './../../local_data';
-
-export default function reducer(state = localData, action) {
+export default function reducer(state = {}, action) {
   switch (action.type) {
     case 'INPUT_SUBMIT':
       return Object.assign({}, state, {

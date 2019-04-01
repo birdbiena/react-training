@@ -4,7 +4,10 @@ import { inputChange, inputSubmit, listItemClick, deleteListItem, increment, dec
 
 function mapStateToProps(state) {
     return {
-        toDoApp: state.toDoApp
+        list: state.list,
+        headers: state.headers,
+        number: state.number,
+        newToDo: state.newToDo
     };
 }
 
