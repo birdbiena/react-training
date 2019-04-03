@@ -16,7 +16,7 @@ class List extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{display: 'none'}}>
         <ul>
           {this.props.listItems.map((el, i) => (
             <li key={i}>

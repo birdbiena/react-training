@@ -30,17 +30,26 @@ function inputChange(value) {
 }
 
 // action
-function increment() {
+function increment(value) {
     return {
-        type: 'INCREMENT'
+        type: 'INCREMENT',
+        value
     };
 }
 
 // action
-function decrement() {
+function decrement(value) {
     return {
-        type: 'DECREMENT'
+        type: 'DECREMENT',
+        value
     };
 }
 
-export { listItemClick, deleteListItem, inputSubmit, inputChange, increment, decrement };
+function setList(data) {
+    return {
+        type: 'SET_LIST',
+        data
+    };
+}
+
+export { listItemClick, deleteListItem, inputSubmit, inputChange, increment, decrement, setList };

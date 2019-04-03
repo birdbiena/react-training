@@ -40,22 +40,23 @@ class ToDoApp extends React.Component {
     }
 
     increment = () => {
-        this.props.increment();
+        this.props.increment(this.props.toDoApp.number);
     }
 
     decrement = () => {
-        this.props.decrement();
+        this.props.decrement(this.props.toDoApp.number);
     }
 
     componentDidMount() {
-        let todoUrl = `http://127.0.0.1:3001/api/todo/`;
+        let todoUrl = `/api/todo/`;
+        let token = localStorage.getItem('token');
+
+        axios.defaults.headers.common = {
+            'Authorization': `bearer ${token}`
+        }
 
         axios.get(todoUrl).then(response => {
-            this.setState({
-                list: response.data.list,
-                number: response.data.number,
-                headers: response.data.headers
-            });
+            this.props.setList(response.data);
         }).catch(error => {
             console.log('error :', error);
         });
@@ -67,17 +68,17 @@ class ToDoApp extends React.Component {
                 <div className="col-md-8 col-md-offset-2">
                     <div className="panel panel-default">
                         <div className="panel-body">
-                            <Conunt countNumber={this.state.list.length} />
-                            <Clock number={this.state.number} />
+                            <Conunt countNumber={this.props.toDoApp.list.length} />
+                            <Clock number={this.props.toDoApp.number} />
                             <hr />
                             <List
-                                listItems={this.state.list}
+                                listItems={this.props.toDoApp.list}
                                 listItemClick={this.onListItemClick}
                                 deleteListItem={this.deleteListItem} />
 
                             <TableComponent
-                                columns={this.state.headers}
-                                listData={this.state.list}
+                                columns={this.props.toDoApp.headers}
+                                listData={this.props.toDoApp.list}
                                 isSelection={this.state.isSelection}
                             />
 

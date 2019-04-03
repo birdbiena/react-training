@@ -1,4 +1,13 @@
-export default function reducer(state = {}, action) {
+// import initialState from './../../local_data';
+
+const initialState = {
+  list: [],
+  headers: [],
+  newToDo: '',
+  number: 0
+};
+
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case 'INPUT_SUBMIT':
       return Object.assign({}, state, {
@@ -17,13 +26,19 @@ export default function reducer(state = {}, action) {
       return Object.assign({}, state, {
         list: [...state.list.slice(0, action.index), ...state.list.slice(action.index + 1)]
       });
+    case 'SET_LIST':
+      return Object.assign({}, state, {
+        list: action.data.list,
+        headers: action.data.headers,
+        number: action.data.number
+      });
     case 'INCREMENT':
       return Object.assign({}, state, {
-        number: state.number + 1
+        number: action.value + 1
       });
     case 'DECREMENT':
       return Object.assign({}, state, {
-        number: state.number - 1
+        number: action.value - 1
       });
     default:
       return state;
