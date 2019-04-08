@@ -1,5 +1,3 @@
-// import initialState from './../../local_data';
-
 const initialState = {
   list: [],
   headers: [],

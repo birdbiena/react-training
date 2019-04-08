@@ -32,10 +32,10 @@ class TableBody extends React.Component {
                 <input type="checkbox" checked={this.props.selectedData[item.id] ? this.props.selectedData[item.id].checked : false} onChange={this.handleClickCheckbox} />
               </td>
             )}
-            <td> {item.id} </td>
-            <td> {item.item} </td>
-            <td> {String(item.done)} </td>
-            <td> {item.create} </td>
+            <td> {item.description} </td>
+            <td> {item.status} </td>
+            <td> {item.update_time} </td>
+            <td> {item.create_time} </td>
           </tr>
         ))}
       </tbody>
