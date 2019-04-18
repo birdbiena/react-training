@@ -2,7 +2,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import TaskList from './../pages/Tasks/TaskList';
+import Task from './../pages/Task';
+
 import { getAllTask, delTask } from './../actions/action';
 
 function mapStateToProps(state) {
@@ -24,5 +25,5 @@ export default withRouter(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps
-  )(TaskList)
+  )(Task)
 );

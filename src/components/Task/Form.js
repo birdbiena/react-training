@@ -1,18 +1,9 @@
 import React from 'react';
 import { Input, TimePicker, Form, Radio, Select, Button } from 'antd';
-import _ from 'lodash';
 
 const { Option, OptGroup } = Select;
 
-class TaskForm extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      item: this.props.item
-    };
-  }
-
+class TaskForm extends React.PureComponent {
   onChange = e => {
     console.log('e :', e);
   };
@@ -21,38 +12,13 @@ class TaskForm extends React.Component {
     console.log('e :', e);
   };
 
-  componentDidMount() {}
-
-  /**
-   * 组件初始化的时候不调用，组件接收新props的时候调用。
-   * 更新  重新调用render
-   * @param {props} nextProps
-   */
-  componentWillReceiveProps(nextProps) {
-    if (_.isEqual(this.props, nextProps)) {
-      return;
-    }
-
-    let { item } = nextProps;
-
-    this.setState({ item });
-  }
-
-  /**
-   * 比较传入内容是否有区别，再去调用render
-   *
-   * @param {*} nextProps
-   * @param {*} nextState
-   */
-  shouldComponentUpdate(nextProps, nextState) {
-    return !_.isEqual(nextProps, this.props) || !_.isEqual(nextState, this.state);
-  }
-
   render() {
+    let { item } = this.props;
+
     return (
       <Form style={{ padding: '12px' }}>
         <Form.Item label="描述">
-          <Input placeholder="input with clear icon" onChange={this.onChange} value={this.state.item.description} />
+          <Input placeholder="input with clear icon" onChange={this.onChange} value={item.description} />
         </Form.Item>
 
         <Form.Item label="时间">

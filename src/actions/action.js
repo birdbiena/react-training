@@ -63,7 +63,7 @@ export function addTask(item) {
 export const addTaskSuccess = item => {
   return {
     type: 'TASK_ADD',
-    payload
+    payload: item
   }
 }
 
