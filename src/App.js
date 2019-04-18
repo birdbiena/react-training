@@ -1,8 +1,9 @@
 import React from 'react';
-import { Layout, Menu, Icon, Row, Col } from 'antd';
-import ToDoAppContainer from './containers/toDoAppContainer';
+import { Layout } from 'antd';
 
-const { Header, Sider, Content } = Layout;
+import SiderBar from './layout/SiderBar';
+import Headers from './layout/Headers';
+import Contents from './layout/Contents';
 
 class App extends React.Component {
   state = {
@@ -15,48 +16,17 @@ class App extends React.Component {
     });
   };
 
+  Home = () => {
+    return <h2>home</h2>;
+  };
+
   render() {
     return (
-      <Layout style={{height: '100%'}}>
-        <Sider
-          trigger={null}
-          collapsible
-          collapsed={this.state.collapsed}
-          >
-          <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">
-              <Icon type="user" />
-              <span>All Tasks</span>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="video-camera" />
-              <span>Today</span>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Icon type="upload" />
-              <span>History</span>
-            </Menu.Item>
-          </Menu>
-        </Sider>
+      <Layout style={{ height: '100%' }}>
+        <SiderBar collapsed={this.state.collapsed} />
         <Layout>
-          <Header style={{ background: '#fff', padding: 0 }}>
-            <Icon
-              className="trigger"
-              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-              onClick={this.toggle}
-            />
-          </Header>
-          <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280, }} >
-          <Row>
-            <Col span={12}>
-            <ToDoAppContainer />
-            </Col>
-            <Col span={12}>
-              <p>Edit</p>
-            </Col>
-          </Row>
-          </Content>
+          <Headers collapsed={this.state.collapsed} toggle={this.toggle} />
+          <Contents />
         </Layout>
       </Layout>
     );

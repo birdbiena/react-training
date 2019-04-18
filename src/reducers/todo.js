@@ -25,11 +25,17 @@ export default function reducer(state = initialState, action) {
         list: [...state.list.slice(0, action.index), ...state.list.slice(action.index + 1)]
       });
     case 'SET_LIST':
+      console.log('action.data :', action.data);
       return Object.assign({}, state, {
         list: action.data.list,
         headers: action.data.headers,
         number: action.data.number
       });
+    case 'ADD_TASK':
+      // return Object.assign({}, state, {
+
+      // });
+      break;
     case 'INCREMENT':
       return Object.assign({}, state, {
         number: action.value + 1

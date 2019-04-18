@@ -1,13 +1,15 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
+
 import { createLogger } from 'redux-logger';
-import toDoApp from './modules/toDoApp';
+import ThunkMiddleware from 'redux-thunk';
+
+import tasks from './task';
 
 const loggerMiddleware = createLogger();
-
-const createStoreWithMiddleware = applyMiddleware(loggerMiddleware)(createStore);
+const createStoreWithMiddleware = applyMiddleware(ThunkMiddleware, loggerMiddleware)(createStore);
 
 const reducer = combineReducers({
-    toDoApp
+    tasks
 });
 
 const configureStore = initialState => createStoreWithMiddleware(reducer, initialState);
