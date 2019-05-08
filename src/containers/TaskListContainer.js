@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import Task from './../pages/Task';
 
-import { getAllTask, delTask } from './../actions/action';
+import { addTask, delTask, updateTask, getAllTask } from './../actions/action';
 
 function mapStateToProps(state) {
   return {
@@ -13,7 +13,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ getAllTask, delTask }, dispatch);
+  return bindActionCreators({ getAllTask, delTask, addTask, updateTask }, dispatch);
 }
 
 function mergeProps(stateProps, dispatchProps, ownProps) {

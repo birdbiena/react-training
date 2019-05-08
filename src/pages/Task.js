@@ -1,21 +1,29 @@
 import React from 'react';
 import _ from 'lodash';
 
-import { Col } from 'antd';
+import { Col, Button } from 'antd';
 
 import TaskList from '../components/Task/List';
 import TaskForm from '../components/Task/Form';
 
 class Task extends React.Component {
   state = {
-    currentItem: {
-      id: '',
-      description: '',
-      status: 0,
-      create_time: '',
-      update_time: '',
-      user_login_id: ''
-    }
+    currentItem: {}
+  };
+
+  refTaskFormModal = React.createRef();
+
+  handleOpen = (event, item) => {
+    event.preventDefault();
+
+    this.setState(
+      {
+        currentItem: Object.assign({}, item)
+      },
+      () => {
+        this.refTaskFormModal.showModal();
+      }
+    );
   };
 
   handleReload = event => {
@@ -23,14 +31,17 @@ class Task extends React.Component {
     this.props.getAllTask();
   };
 
-  handleDelete = item => {
+  handleDelete = (event, item) => {
+    event.preventDefault();
     this.props.delTask(item.id);
   };
 
-  handleEdit = item => {
-    this.setState(state => ({
-      currentItem: Object.assign({}, state.currentItem, item)
-    }));
+  handleEdit = (item) => {
+    this.props.updateTask(item);
+  };
+
+  handleAdd = (item) => {
+    this.props.addTask(item);
   };
 
   componentWillMount() {}
@@ -40,15 +51,7 @@ class Task extends React.Component {
    * 更新  重新调用render
    * @param {props} nextProps
    */
-  componentWillReceiveProps(nextProps) {
-  //   if (_.isEqual(this.props, nextProps)) {
-  //     return;
-  //   }
-
-  //   let { item } = nextProps;
-
-  //   this.setState({ item });
-  }
+  componentWillReceiveProps(nextProps) {}
 
   /**
    * 比较传入内容是否有区别，再去调用render
@@ -63,14 +66,17 @@ class Task extends React.Component {
   componentDidMount() {}
 
   render() {
+    let { tasks } = this.props;
+    console.log('tasks :', tasks);
     return (
       <>
-        <Col span={12}>
-          <TaskList tasks={this.props.tasks} delFun={this.handleDelete} editFun={this.handleEdit} />
-        </Col>
-        <Col span={12}>
-          <TaskForm item={this.state.currentItem} style={{ padding: '12px' }} />
-        </Col>
+      <Col span={24}>
+        <Button icon="edit" onClick={this.refTaskFormModal.showModal}></Button>
+      </Col>
+      <Col span={24}>
+        <TaskList tasks={this.props.tasks} delFun={this.handleDelete} editFun={this.handleOpen} />
+        <TaskForm wrappedComponentRef={form => (this.refTaskFormModal = form)} item={this.state.currentItem} addFun={this.handleAdd} editFun={this.handleEdit} />
+      </Col>
       </>
     );
   }
